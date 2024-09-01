@@ -35,15 +35,21 @@
 
 
     <mat-form-field class="example-full-width">
+      <mat-label>Employee Contact Number</mat-label>
+      <input matInput placeholder="Ex . emp001" name="employeeContactNUmber" [(ngModel)]="employee.employeeContactNUmber">
+    </mat-form-field>
+
+
+    <mat-form-field class="example-full-width">
       <mat-label>Employee Skills</mat-label>
       <input matInput placeholder="Ex . emp001" name="employeeSkills" [(ngModel)]="employee.employeeSkills">
     </mat-form-field>
 
 
-    <mat-radio-group aria-label="Select an option">
+    <mat-radio-group [(ngModel)]="employee.employeeGender" aria-label="Select an option">
       <mat-label>Employee gender</mat-label>
-      <mat-radio-button value="M">M</mat-radio-button>
-      <mat-radio-button value="F">F</mat-radio-button>
+      <mat-radio-button [checked]="employee.employeeGender == 'M' "  (click)="selectGender('M')">M</mat-radio-button>
+      <mat-radio-button [checked]="employee.employeeGender == 'F' "  (click)="selectGender('F')">F</mat-radio-button>
     </mat-radio-group>
 
 

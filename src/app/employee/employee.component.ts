@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatFabButton, MatIconButton} from "@angular/material/button";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
@@ -45,15 +45,23 @@ export class EmployeeComponent implements OnInit{
     employeeSkills: ""
   }
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(private employeeService: EmployeeService,private router:Router) {}
 
   ngOnInit(): void {}
+
+
+  selectGender(gender:string):void{
+    this.employee.employeeGender=gender;
+  }
+
 
   saveEmployee(employeeForm:NgForm):void {
     this.employeeService.saveEmployee(this.employee).subscribe({
       next:(res:EmployeeModel)=>{
         console.log(res);
+        this.employee.employeeGender='';
         employeeForm.reset();
+        this.router.navigate(["/employee-list"]);
       },
       error:(res:HttpErrorResponse)=>{
         console.log(res);

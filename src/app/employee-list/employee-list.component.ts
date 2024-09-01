@@ -1,12 +1,73 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {MatButton} from "@angular/material/button";
+import {RouterLink} from "@angular/router";
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+  MatTable
+} from "@angular/material/table";
+import {EmployeeService} from "../employee.service";
+import {EmployeeModel} from "../model/employee.model";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
-  imports: [],
+  imports: [
+    MatButton,
+    RouterLink,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatHeaderRow,
+    MatRow,
+    MatHeaderRowDef,
+    MatRowDef
+  ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css'
 })
-export class EmployeeListComponent {
+export class EmployeeListComponent implements OnInit{
+
+  dataSource:EmployeeModel[]=[];
+
+
+  displayedColumns:string[]=[
+    'employeeId',
+    'employeeName',
+    'employeeContactNUmber',
+    'employeeAddress',
+    'employeeGender',
+    'employeeDepartment',
+    'employeeSkills'
+  ];
+
+
+  constructor(private employeeService: EmployeeService){
+    this.getEmployeeList();
+  }
+
+  ngOnInit(): void {}
+
+  getEmployeeList():void {
+    this.employeeService.getEmployee().subscribe({
+      next:(res:EmployeeModel[])=>{
+        console.log(res);
+        this.dataSource=res;
+      },
+      error:(err:HttpErrorResponse)=>{
+        console.log(err)
+      }
+    });
+  }
+
+
 
 }
